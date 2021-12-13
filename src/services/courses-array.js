@@ -1,22 +1,26 @@
-class CoursesArray{
-
+export default class CoursesArray{
+    #courses
     constructor(){
-        this.courses = []
+        this.#courses = []
     }
 
     add(course){
-        this.courses.push(course)
+        this.#courses.push(course)
     }
     remove(id){
-        this.courses.splice(this.courses.findIndex(id), 1)
+        this.#courses.splice(this.#courses.findIndex(e => e.id == id), 1)
     }
     update(id, newCourse){
-        this.courses[this.courses.findIndex(id)] = newCourse
+        this.#courses[this.#courses.findIndex(e => e.id == id)] = newCourse
     }
     get(id){
-        return this.courses.find(c=>c.id===id)
+        return id!=undefined?this.#courses.find(c=>c.id===id):[...this.course]
     }
     exists(id){
         return this.get(id)?true: false
     }
+    getCourses(){
+        return this.#courses
+    }
+
 }
