@@ -1,0 +1,29 @@
+.submit-reset{
+    display: block;
+    width: 100%;
+}
+
+.col{
+    border: 1px solid #000;
+}
+
+.row h5{
+    margin-top: 10px;
+}
+
+.btn{
+    margin-top: 15px;
+}
+
+.form-check{
+    margin-top: 5px;
+    background: rgba(108, 117, 125, 0.25);
+    border-radius: 5px;
+    padding: 0.5em 2.5em 0.5em!important;
+}
+
+.container{
+    background: #eaeaea;
+    padding: 30px;
+    border-radius: 20px;
+}

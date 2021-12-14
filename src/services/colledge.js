@@ -8,7 +8,7 @@ export default class Colledge{
     }
 
     addCourse(course){
-        
+        course = this.#convertFields(course)
         if(!this.#validate(course)){
             return null
         }
@@ -16,38 +16,59 @@ export default class Colledge{
         this.#coursesProvider.add(course)
     }
 
+    #convertFields(course){
+        course.hours = +course.hours
+        course.cost = +course.cost
+        course.openDate = new Date(course.openDate)
+        return course
+    }
+
     #validate(course){
-        const checkCost = course.cost>=this.#courseData.minCost && course.cost <= this.#courseData.maxCost
-        const checkHours = course.hours>=this.#courseData.minHours && course.hours <= this.#courseData.maxHours
-        const checkYear = course.openDate.getFullYear()>=this.#courseData.minYear && course.openDate.getFullYear() <= this.#courseData.maxYear
+        const {minCost, maxCost, minHours, maxHours, minYear, maxYear, courseNames, lecturers, types, timing} = this.#courseData
+        const {cost, hours, openDate, courseName, lecturerName, dayEvening, type} = course
         
-        const checkName = this.#courseData.courseNames.find(courseName => courseName === course.courseName)
-        const checkLecturer = this.#courseData.lecturers.find(lecturerName => lecturerName === course.lecturerName)
-        const checkType = this.#courseData.types.find(type => type === course.type)
-        const checkTiming = this.#courseData.timing.find(dayEvening => dayEvening === course.dayEvening)
+        const checkCost = cost>=minCost && cost <= maxCost
+        const checkHours = hours>=minHours && hours <= maxHours
+        const checkYear = openDate.getFullYear()>=minYear && openDate.getFullYear() <= maxYear
+        
+        const checkName = courseNames.includes(courseName)
+        const checkLecturer = lecturers.includes(lecturerName)
+        const checkType = types.includes(type)
+        const checkTiming = (()=>{
+            if(dayEvening.length === 0 || dayEvening.length>timing.length){
+                return false
+            }
+            for(let dy of dayEvening){
+                if(!timing.includes(dy)){
+                    return false
+                }
+            }
+            return true
+        })()
 
         let strError = ""
 
-            strError += !checkCost?`incorrect cost - ${course.cost}\n`:''
-            strError += !checkHours?`incorrect hours - ${course.hours}\n`:''
-            strError += !checkYear?`incorrect openDate - ${course.openDate}\n`:''
-            strError += !checkName?`incorrect course name - ${course.courseName}\n`:''
-            strError += !checkLecturer?`incorrect lecturer - ${course.lecturerName}\n`:''
-            strError += !checkType?`incorrect type of course - ${course.type}\n`:''
-            strError += !checkTiming?`incorrect timing - ${course.dayEvening}\n`:''
+            strError += !checkCost?`incorrect cost - ${cost}\n`:''
+            strError += !checkHours?`incorrect hours - ${hours}\n`:''
+            strError += !checkYear?`incorrect openDate - ${openDate}\n`:''
+            strError += !checkName?`incorrect course name - ${courseName}\n`:''
+            strError += !checkLecturer?`incorrect lecturer - ${lecturerName}\n`:''
+            strError += !checkType?`incorrect type of course - ${type}\n`:''
+            strError += !checkTiming?`incorrect timing - ${dayEvening}\n`:''
         
         if(strError){
-            throw new Error(strError)
+            throw strError
         }
         return true
     }
     
     #getId(){
         
-        let id = getRandomInteger(this.#courseData.minId, this.#courseData.maxId)
-        while(this.#coursesProvider.get(id)!==undefined){
+        let id 
+        do {
             id = getRandomInteger(this.#courseData.minId, this.#courseData.maxId)
-        }
+        } while (this.#coursesProvider.exists(id));
+
         return id
     }
 
