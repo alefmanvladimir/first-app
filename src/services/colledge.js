@@ -1,3 +1,4 @@
+import _ from "lodash"
 import { getRandomInteger } from "../util/random"
 export default class Colledge{
     #coursesProvider
@@ -67,12 +68,16 @@ export default class Colledge{
         let id 
         do {
             id = getRandomInteger(this.#courseData.minId, this.#courseData.maxId)
-        } while (this.#coursesProvider.exists(id));
+        } while (this.#coursesProvider.exists(id))
 
         return id
     }
 
     getAllCourses(){
         return this.#coursesProvider.getCourses()
+    }
+
+    sort(key){
+        return _.sortBy(this.getAllCourses(), [key])
     }
 }

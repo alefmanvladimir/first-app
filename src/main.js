@@ -8,6 +8,7 @@ import Colledge from "./services/colledge"
 import { courseProvider } from "./config/servicesConfig"
 import createCourse from "./modules/Course"
 import FormHandler from "./ui/form-handler"
+import TableHandler from "./ui/table.handler"
 
 const N_RANDOM_COURSE = 20
 const colledge = new Colledge(courseProvider, courseData)
@@ -44,12 +45,22 @@ const debugDisplayColledge = colledge=>{
         console.log(JSON.stringify(course))
     });
 }
-// createRandomCourses(colledge, N_RANDOM_COURSE)
+createRandomCourses(colledge, N_RANDOM_COURSE)
 
-const formCourse = new FormHandler('course-form', 'alert')
-FormHandler.fillOptions("course-name", courseData.courseNames)
-FormHandler.fillOptions("lecturer-name", courseData.lecturers)
-formCourse.addHandler(course => {
-    colledge.addCourse(course)
-    debugDisplayColledge(colledge)
-})
+// const formCourse = new FormHandler('course-form', 'alert')
+// FormHandler.fillOptions("course-name", courseData.courseNames)
+// FormHandler.fillOptions("lecturer-name", courseData.lecturers)
+// formCourse.addHandler(course => {
+//     colledge.addCourse(course)
+//     debugDisplayColledge(colledge)
+// })
+
+const coursesSort = function (key){
+    tableCourse.clear()
+    return colledge.sort(key).forEach(c=>tableCourse.addRow(c, c.id))
+}
+
+const tableCourse = new TableHandler('courses-header', 'courses-body', 
+['id', 'courseName', 'lecturerName', 'hours', 'cost', 'openDate'], coursesSort)
+colledge.getAllCourses().forEach(c=>tableCourse.addRow(c, c.id))
+
