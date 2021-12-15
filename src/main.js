@@ -46,7 +46,7 @@ const debugDisplayColledge = colledge=>{
 }
 // createRandomCourses(colledge, N_RANDOM_COURSE)
 
-const formCourse = new FormHandler('course-form')
+const formCourse = new FormHandler('course-form', 'alert')
 FormHandler.fillOptions("course-name", courseData.courseNames)
 FormHandler.fillOptions("lecturer-name", courseData.lecturers)
 formCourse.addHandler(course => {

@@ -48,13 +48,13 @@ export default class Colledge{
 
         let strError = ""
 
-            strError += !checkCost?`incorrect cost - ${cost}\n`:''
-            strError += !checkHours?`incorrect hours - ${hours}\n`:''
-            strError += !checkYear?`incorrect openDate - ${openDate}\n`:''
-            strError += !checkName?`incorrect course name - ${courseName}\n`:''
-            strError += !checkLecturer?`incorrect lecturer - ${lecturerName}\n`:''
-            strError += !checkType?`incorrect type of course - ${type}\n`:''
-            strError += !checkTiming?`incorrect timing - ${dayEvening}\n`:''
+            strError += !checkCost?`<strong>Incorrect cost - ${cost}</strong>, min-${minCost} max-${maxCost}; <br/>`:''
+            strError += !checkHours?`<strong>Incorrect hours - ${hours}</strong>, min-${minHours} max-${maxHours}; <br/>`:''
+            strError += !checkYear?`<strong>Incorrect date - ${openDate.toDateString()}</strong>, min year-${minYear} max year-${maxYear}; <br/>`:''
+            strError += !checkName?`<strong>Incorrect course name - ${courseName}</strong>; <br/>`:''
+            strError += !checkLecturer?`<strong>Incorrect lecturer - ${lecturerName}</strong>; <br/>`:''
+            strError += !checkType?`<strong>Incorrect type of course - ${type}</strong>; <br/>`:''
+            strError += !checkTiming?`<strong>You should choose timing;</strong> <br/>`:''
         
         if(strError){
             throw strError
