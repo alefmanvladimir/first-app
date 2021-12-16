@@ -62,8 +62,7 @@ const coursesSort = function (key){
 }
 
 const coursesRemove = function(id){
-    let course = colledge.getCourse(id)
-    colledge.removeCourse(course)
+    colledge.removeCourseById(id)
     tableCourse.removeRow(id)
     
 }

@@ -25,18 +25,24 @@ export default class TableHandler{
     }
 
     addRow(obj, id){
-        this.#bodyElement.innerHTML += `
-            <tr id=${id}>
-                ${this.#getRecordDate(obj, id)}
-            </tr>
-        `
-        if(this.#removeFunc){
-            
-            const elements = document.querySelectorAll(`.removeElem`)
-            elements.forEach(elem=>{
+
+            let row = document.createElement("tr")
+            row.setAttribute("id", id)
+            row.innerHTML = `
+                <tr id=${id}>
+                    ${this.#getRecordDate(obj, id)}
+                </tr>
+            `
+            if(this.#removeFunc){
+                let elem = document.createElement("td")
+                elem.setAttribute("class", "removeElem")
+                elem.setAttribute("name", id)
+                elem.innerHTML = `<img src="https://icons-for-free.com/iconfiles/png/512/remove+icon-1320166863280113920.png">`
+                row.appendChild(elem)
                 elem.addEventListener('click', this.#removeFunc.bind(this, elem.getAttribute("name")))
-            })
-        }
+            }
+            
+            this.#bodyElement.appendChild(row)
     }
 
     removeRow(id){
@@ -48,16 +54,7 @@ export default class TableHandler{
     }
 
     #getRecordDate(obj, id){
-        let res = this.#keys.map(k=>`<td>${obj[k].constructor.name==="Date"?obj[k].toISOString().substr(0, 10): obj[k]}</td>`).join('')
-        if(this.#removeFunc){
-            res += `
-            <td class="removeElem" name="${id}">
-                <img src="https://icons-for-free.com/iconfiles/png/512/remove+icon-1320166863280113920.png">
-            </td>
-            `
-        }
-        
-        return res
+        return this.#keys.map(k=>`<td>${obj[k].constructor.name==="Date"?obj[k].toISOString().substr(0, 10): obj[k]}</td>`).join('')
     }
 }
 

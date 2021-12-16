@@ -17,8 +17,8 @@ export default class Colledge{
         this.#coursesProvider.add(course)
     }
 
-    removeCourse(course){
-        this.#coursesProvider.remove(course.id)
+    removeCourseById(id){
+        this.#coursesProvider.remove(id)
     }
 
     getCourse(id){
