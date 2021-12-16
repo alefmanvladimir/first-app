@@ -118,6 +118,70 @@
             </tbody>
         </table>
     </div>
+
+    <div id="statistics" class="container">
+        
+        <div class="statistics">
+            <form id="hours-form">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center"><h2>Hours statistics</h2></div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-8">
+                        <select id="hours-name" class="form-select" name="hoursName" required>
+                            <option value hidden disabled selected>--Select hours interval--</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <button id="getStatH">Get</button>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr id="hours-header">
+        
+                        </tr>
+                    </thead>
+                    <tbody id="hours-body">
+        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="statistics">
+            <form id="cost-form">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center"><h2>Cost statistics</h2></div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-8">
+                        <select id="cost-name" class="form-select" name="costName" required>
+                            <option value hidden disabled selected>--Select cost interval--</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <button id="getStatC">Get</button>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr id="cost-header">
+        
+                        </tr>
+                    </thead>
+                    <tbody id="cost-body">
+        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
     <script src="dist/bundle.js"></script>
 </body>
 </html>

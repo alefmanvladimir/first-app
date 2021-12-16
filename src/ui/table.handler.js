@@ -21,7 +21,6 @@ export default class TableHandler{
                 column.addEventListener('click', sortFunc.bind(this, column.textContent))
             })
         }
-        
     }
 
     addRow(obj, id){

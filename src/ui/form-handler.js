@@ -16,7 +16,6 @@ export default class FormHandler {
             throw "Wrong form content"
         }
         this.#inputElements = Array.from(this.#inputElements) // conversion to Array from NodeList
-
     }
 
     addHandler(hundlerFunc){
@@ -34,11 +33,12 @@ export default class FormHandler {
     #onSubmit(handlerFunc, event){
         event.preventDefault()
         const obj = this.#inputElements.reduce(createObject, {})
-        this.#alertElement.innerHTML=''
+        this.#alertElement?this.#alertElement.innerHTML='':''
         try{
             handlerFunc(obj)
             this.#formElement.reset()
         } catch(e){
+            console.log(e)
             this.#showAlert(e)
         }
         
@@ -46,7 +46,7 @@ export default class FormHandler {
 
     #showAlert(error){
         this.#alertElement.innerHTML = `
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             ${error}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>

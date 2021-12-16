@@ -10,7 +10,7 @@ import createCourse from "./modules/Course"
 import FormHandler from "./ui/form-handler"
 import TableHandler from "./ui/table.handler"
 
-const N_RANDOM_COURSE = 5
+const N_RANDOM_COURSE = 25
 const colledge = new Colledge(courseProvider, courseData)
 
 const createRandomCourses = function(colledge, nCourses){
@@ -40,20 +40,16 @@ const createRandomCourses = function(colledge, nCourses){
     )
 }
 
-const debugDisplayColledge = colledge=>{
-    colledge.getAllCourses().forEach(course => {
-        console.log(JSON.stringify(course))
-    });
-}
 createRandomCourses(colledge, N_RANDOM_COURSE)
 
+
+// форма создания курса
 const formCourse = new FormHandler('course-form', 'alert')
 FormHandler.fillOptions("course-name", courseData.courseNames)
 FormHandler.fillOptions("lecturer-name", courseData.lecturers)
 formCourse.addHandler(course => {
     colledge.addCourse(course)
     tableCourse.addRow(course, course.id)
-    // debugDisplayColledge(colledge)
 })
 
 const coursesSort = function (key){
@@ -63,10 +59,52 @@ const coursesSort = function (key){
 
 const coursesRemove = function(id){
     colledge.removeCourseById(id)
-    tableCourse.removeRow(id)
-    
+    tableCourse.removeRow(id)    
 }
+
+
+// таблица курсов
 const tableCourse = new TableHandler('courses-header', 'courses-body', 
 ['id', 'courseName', 'lecturerName', 'hours', 'cost', 'openDate'], coursesSort, coursesRemove)
 colledge.getAllCourses().forEach(c=>tableCourse.addRow(c, c.id))
 
+
+// статистика по времени
+const formHours = new FormHandler("hours-form")
+const hoursInterval = [10, 20, 30, 50, 100]
+FormHandler.fillOptions("hours-name", hoursInterval)
+const tableHours = new TableHandler("hours-header", "hours-body", ["minInterval", "maxInterval", "amount"])
+
+formHours.addHandler(interval => {
+    tableHours.clear()
+    interval = parseInt(interval.hoursName)
+    let rows = colledge.getStatHours(interval)
+    
+    Object.entries(rows).forEach(r=>{
+        try{
+            tableHours.addRow({minInterval: (r[0]*interval), maxInterval: (r[0]*interval)+interval, amount: r[1]})
+        } catch(e){
+            console.log(e)
+        }  
+    })
+})
+
+// статистика по стоимости
+const formCost = new FormHandler("cost-form")
+const costInterval = [1000, 2000, 3000, 5000, 10000]
+FormHandler.fillOptions("cost-name", costInterval)
+const tableCost = new TableHandler("cost-header", "cost-body", ["minInterval", "maxInterval", "amount"])
+
+formCost.addHandler(interval => {
+    tableCost.clear()
+    interval = parseInt(interval.costName)
+    let rows = colledge.getStatCost(interval)
+    Object.entries(rows).forEach(r=>{
+        try{
+            tableCost.addRow({minInterval: (r[0]*interval), maxInterval: (r[0]*interval)+interval, amount: r[1]})
+        } catch(e){
+            console.log(e)
+        }  
+    })
+})
+// lodash countBy
