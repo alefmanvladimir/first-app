@@ -17,6 +17,15 @@ export default class Colledge{
         this.#coursesProvider.add(course)
     }
 
+    removeCourse(course){
+        this.#coursesProvider.remove(course.id)
+    }
+
+    getCourse(id){
+        let res = this.#coursesProvider.get(id)
+        return res 
+    }
+
     #convertFields(course){
         course.hours = +course.hours
         course.cost = +course.cost

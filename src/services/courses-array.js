@@ -14,7 +14,7 @@ export default class CoursesArray{
         this.#courses[this.#courses.findIndex(e => e.id == id)] = newCourse
     }
     get(id){
-        return id!=undefined?this.#courses.find(c=>c.id===id):[...this.course]
+        return id!=undefined?this.#courses.find(c=>c.id==id):[...this.course]
     }
     exists(id){
         return this.get(id)?true: false

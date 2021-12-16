@@ -10,7 +10,7 @@ import createCourse from "./modules/Course"
 import FormHandler from "./ui/form-handler"
 import TableHandler from "./ui/table.handler"
 
-const N_RANDOM_COURSE = 20
+const N_RANDOM_COURSE = 5
 const colledge = new Colledge(courseProvider, courseData)
 
 const createRandomCourses = function(colledge, nCourses){
@@ -47,20 +47,27 @@ const debugDisplayColledge = colledge=>{
 }
 createRandomCourses(colledge, N_RANDOM_COURSE)
 
-// const formCourse = new FormHandler('course-form', 'alert')
-// FormHandler.fillOptions("course-name", courseData.courseNames)
-// FormHandler.fillOptions("lecturer-name", courseData.lecturers)
-// formCourse.addHandler(course => {
-//     colledge.addCourse(course)
-//     debugDisplayColledge(colledge)
-// })
+const formCourse = new FormHandler('course-form', 'alert')
+FormHandler.fillOptions("course-name", courseData.courseNames)
+FormHandler.fillOptions("lecturer-name", courseData.lecturers)
+formCourse.addHandler(course => {
+    colledge.addCourse(course)
+    tableCourse.addRow(course, course.id)
+    // debugDisplayColledge(colledge)
+})
 
 const coursesSort = function (key){
     tableCourse.clear()
     return colledge.sort(key).forEach(c=>tableCourse.addRow(c, c.id))
 }
 
+const coursesRemove = function(id){
+    let course = colledge.getCourse(id)
+    colledge.removeCourse(course)
+    tableCourse.removeRow(id)
+    
+}
 const tableCourse = new TableHandler('courses-header', 'courses-body', 
-['id', 'courseName', 'lecturerName', 'hours', 'cost', 'openDate'], coursesSort)
+['id', 'courseName', 'lecturerName', 'hours', 'cost', 'openDate'], coursesSort, coursesRemove)
 colledge.getAllCourses().forEach(c=>tableCourse.addRow(c, c.id))
 

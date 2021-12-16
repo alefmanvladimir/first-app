@@ -33,10 +33,11 @@ export default class FormHandler {
 
     #onSubmit(handlerFunc, event){
         event.preventDefault()
+        const obj = this.#inputElements.reduce(createObject, {})
         this.#alertElement.innerHTML=''
         try{
-            const obj = this.#inputElements.reduce(createObject, {})
             handlerFunc(obj)
+            this.#formElement.reset()
         } catch(e){
             this.#showAlert(e)
         }
