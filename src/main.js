@@ -58,8 +58,10 @@ const coursesSort = function (key){
 }
 
 const coursesRemove = function(id){
-    colledge.removeCourseById(id)
-    tableCourse.removeRow(id)    
+    if(confirm('Are you sure?')){
+        colledge.removeCourseById(id)
+        tableCourse.removeRow(id)   
+    }
 }
 
 
@@ -107,4 +109,5 @@ formCost.addHandler(interval => {
         }  
     })
 })
+
 // lodash countBy
